@@ -1,0 +1,23 @@
+# --- API layer ---
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.6,<3.0
+numpy>=1.24,<2.0
+
+# --- LLM providers (only the one you actually use needs a real API key,
+# but all three SDKs are installed so LLM_PROVIDER can be switched via .env) ---
+anthropic>=0.34,<1.0
+openai>=1.35,<2.0
+google-genai>=1.0,<2.0
+
+# --- Embeddings (local, CPU-fine) ---
+sentence-transformers>=2.7,<3.0
+
+# --- Vector store ---
+chromadb==0.5.5
+
+# --- Ingestion ---
+requests>=2.31,<3.0
+
+# --- Config ---
+python-dotenv>=1.0,<2.0

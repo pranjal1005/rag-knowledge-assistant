@@ -1,0 +1,31 @@
+services:
+  chroma:
+    image: chromadb/chroma:0.5.5
+    ports:
+      - "8001:8000"  # host:container — 8001 on the host so it doesn't clash with the app's 8000
+    volumes:
+      - chroma-data:/chroma/chroma
+    healthcheck:
+      test: ["CMD", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+    depends_on:
+      chroma:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  chroma-data:
